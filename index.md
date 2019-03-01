@@ -12,3 +12,7 @@ Aprendimos a usar la biblioteca sympy.
 - [Página de Python](https://www.python.org/)
 - [Página de Google](https://www.google.com/)
 - [Github](https://www.github.com/)
+
+## Problemas
+
+Maximizar $z=x_1+x_2$.
