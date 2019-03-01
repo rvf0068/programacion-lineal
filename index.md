@@ -1,3 +1,5 @@
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
 ## Página de programación lineal
 
 En esta página voy a mostrar las cosas magníficas que estoy aprendiendo en el
@@ -15,4 +17,4 @@ Aprendimos a usar la biblioteca sympy.
 
 ## Problemas
 
-Maximizar $z=x_1+x_2$.
+Maximizar \(z=x_1+x_2\) sujeto a \(x_1\geq 0\).
