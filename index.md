@@ -17,4 +17,4 @@ Aprendimos a usar la biblioteca sympy.
 
 ## Problemas
 
-Maximizar \(z=x_1+x_2\) sujeto a \(x_1\geq 0\) $a^2=b^2$.
+Maximizar $$z=x_1+x_2$$ sujeto a $$x_1\geq 0$$ $$a^2=b^2$$
