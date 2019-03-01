@@ -2,6 +2,8 @@
 
 ## Página de programación lineal
 
+![Región factible](region_factible_2.jpg)
+
 En esta página voy a mostrar las cosas magníficas que estoy aprendiendo en el
 magnífico curso de Programación lineal.
 
