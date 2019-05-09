@@ -1,0 +1,241 @@
+#+title: Diccionarios
+
+
+
+* Diccionarios en python
+
+Un diccionario es una estructura de datos en Python que generaliza a
+las listas.
+
+** Ejemplo
+
+Supongamos a una actriz le han ofrecido los siguientes proyectos para
+el siguiente año.
+
+| Título                  | Inicio     | Final      |
+|-------------------------+------------+------------|
+| Star Wars 10            | Enero 15   | Febrero 2  |
+| Toy Story 5             | Enero 28   | Febrero 3  |
+| Anabelle 3              | Marzo 2    | Marzo 5    |
+| Planeta de los Simios 4 | Enero 17   | Marzo 3    |
+| Titanic 2               | Febrero 4  | Febrero 25 |
+| Harry Potter 9          | Febrero 16 | Marzo 17   |
+| Saw 9                   | Marzo 10   | Marzo 11   |
+|-------------------------+------------+------------|
+
+Una manera de organizar la información podría ser por medio de listas,
+como:
+
+#+BEGIN_SRC ipython :session dpulp
+st10 = ["Star Wars 10", "Enero 15", "Febrero 2"]
+ts5 = ["Toy Story 5", "Enero 28", "Febrero 3"]
+#+END_SRC
+
+#+RESULTS:
+
+Hay (al menos) dos maneras en que se puede mejorar esto. Primero,
+probablemente la actriz necesita saber la cantidad de días de trabajo
+por película para determinar su salario. Para esto, es conveniente
+usar la biblioteca =datetime=.
+
+#+BEGIN_SRC ipython :session dpulp 
+from datetime import date
+st10 = ["Star Wars 10", date(2020,1,15), date(2020,2,2)]
+ts5=["Toy Story 5", date(2020,1,28), date(2020,2,3)]
+duracion_st10 = st10[2]-st10[1]
+duracion_ts5 = ts5[2]-ts5[1]
+duracion_st10.days, duracion_ts5.days
+#+END_SRC
+
+#+RESULTS:
+: : (18, 6)
+
+La otra manera es usar una nueva estructura de datos, los
+=diccionarios=. Esto es conveniente, pues los datos de la película no
+son todos de la misma naturaleza.
+
+#+BEGIN_SRC ipython :session dpulp 
+st10 = {'titulo':"Star Wars 10", 'inicio':date(2020,1,15), 'final':date(2020,2,2)}
+ts5={'titulo':"Toy Story 5", 'inicio':date(2020,1,28), 'final':date(2020,2,3)}
+st10['titulo'], (st10['final']-st10['inicio']).days
+#+END_SRC
+
+#+RESULTS:
+
+Otra manera de introducir diccionarios cuando las /claves/ son cadenas
+simples:
+
+#+BEGIN_SRC ipython :session dpulp 
+ana3=dict(titulo="Anabelle 3",inicio=date(2020,3,2),final=date(2020,3,5))
+ana3, ana3['titulo'], ana3['inicio']
+#+END_SRC
+
+#+RESULTS:
+: #+BEGIN_EXAMPLE
+:   ({'titulo': 'Anabelle 3',
+:   'inicio': datetime.date(2020, 3, 2),
+:   'final': datetime.date(2020, 3, 5)},
+:   'Anabelle 3',
+:   datetime.date(2020, 3, 2))
+: #+END_EXAMPLE
+
+Otra manera es asignar los datos sucesivamente:
+
+#+begin_src ipython :session dpulp
+ps4 = {}
+ps4['titulo'] = "Planeta de los Simios 4"
+ps4['inicio'] = date(2020,1,17)
+ps4['final'] = date(2020,3,3)
+ps4
+#+end_src
+
+#+RESULTS:
+: #+BEGIN_EXAMPLE
+:   {'titulo': 'Planeta de los Simios 4',
+:   'inicio': datetime.date(2020, 1, 17),
+:   'final': datetime.date(2020, 3, 3)}
+: #+END_EXAMPLE
+
+Otra manera es usando =zip=, que es una operación entre listas.
+
+#+begin_src ipython :session dpulp
+claves = ['titulo', 'inicio', 'final']
+datos = ["Titanic 2", date(2020,2,4), date(2020,2,25)]
+list(zip(claves, datos))
+#+end_src
+
+#+RESULTS:
+: #+BEGIN_EXAMPLE
+:   [('titulo', 'Titanic 2'),
+:   ('inicio', datetime.date(2020, 2, 4)),
+:   ('final', datetime.date(2020, 2, 25))]
+: #+END_EXAMPLE
+
+#+begin_src ipython :session dpulp
+ti2 = dict(zip(claves, datos))
+ti2
+#+end_src
+
+#+RESULTS:
+: #+BEGIN_EXAMPLE
+:   {'titulo': 'Titanic 2',
+:   'inicio': datetime.date(2020, 2, 4),
+:   'final': datetime.date(2020, 2, 25)}
+: #+END_EXAMPLE
+
+* Operaciones en listas
+
+Una manera sencilla de crear nuevas listas a partir de otras:
+
+#+begin_src ipython
+cuadrados = [x**2 for x in range(10)]
+cuadrados
+#+end_src
+
+#+RESULTS:
+: : [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+Funciona también para diccionarios
+
+#+begin_src ipython :session dpulp
+datos = [ti2[info] for info in claves]
+datos
+#+end_src
+
+#+RESULTS:
+: : ['Titanic 2', datetime.date(2020, 2, 4), datetime.date(2020, 2, 25)]
+
+* En pulp
+
+#+begin_src ipython :session dpulp
+from pulp import *
+prob = LpProblem("Problema", LpMaximize)
+variables = LpVariable.dicts("x", range(5), 0)
+variables
+#+end_src
+
+#+RESULTS:
+: : {0: x_0, 1: x_1, 2: x_2, 3: x_3, 4: x_4}
+
+Si queremos incluir la restricción
+\(3x_{0}+2x_{1}+x_{2}+3x_{3}+7x_{4}\leq 5\), podríamos poner:
+
+#+begin_src ipython :session dpulp
+coeficientes = [3,2,1,3,7]
+prob += lpSum(coeficientes[i]*variables[i] for i in range(5)) <= 5
+prob
+#+end_src
+
+#+RESULTS:
+#+begin_example
+,#+BEGIN_EXAMPLE
+  Problema:
+  MAXIMIZE
+  None
+  SUBJECT TO
+  _C1: 3 x_0 + 2 x_1 + x_2 + 3 x_3 + 7 x_4 <= 5
+  
+  VARIABLES
+  x_0 Continuous
+  x_1 Continuous
+  x_2 Continuous
+  x_3 Continuous
+  x_4 Continuous
+,#+END_EXAMPLE
+#+end_example
+
+Para maximizar \(-x_{2}+x_{4}\) con esta restricción, podemos poner:
+
+#+begin_src ipython :session dpulp
+objetivo = [0,0,-1,0,1]
+prob += lpSum(objetivo[i]*variables[i] for i in range(5))
+prob
+#+end_src
+
+#+RESULTS:
+#+begin_example
+,#+BEGIN_EXAMPLE
+  Problema:
+  MAXIMIZE
+  -1*x_2 + 1*x_4 + 0
+  SUBJECT TO
+  _C1: 3 x_0 + 2 x_1 + x_2 + 3 x_3 + 7 x_4 <= 5
+  
+  VARIABLES
+  x_0 Continuous
+  x_1 Continuous
+  x_2 Continuous
+  x_3 Continuous
+  x_4 Continuous
+,#+END_EXAMPLE
+#+end_example
+
+#+begin_src ipython :session dpulp
+status = prob.solve()
+value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (0.71428571, 'Optimal')
+
+** Problema
+
+Usando =for=, determinar los valores de las variables donde se alcanza
+el máximo.
+
+** COMMENT Solución
+
+#+begin_src ipython :session dpulp
+[value(variables[i]) for i in range(5)]
+#+end_src
+
+#+RESULTS:
+: : [0.0, 0.0, 0.0, 0.0, 0.71428571]
+
+#+begin_src ipython :session dpulp
+
+#+end_src
+
+# Local Variables:
+# org-confirm-babel-evaluate: nil
+# End:
