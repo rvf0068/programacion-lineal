@@ -53,7 +53,7 @@ desigualdades.
 ## Convexidad
 
 Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
-[0,1]\) se tiene que \(tx+(1-t)y\in X\).
+[0,1]\) se tiene que \(tx+(1-t)y \in X\).
 
 
 <a id="orgefb0454"></a>
@@ -209,7 +209,7 @@ Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
         2+2
     
     También podemos usar la biblioteca pulp. Por ejemplo, encontramos el
-    máximo de \(-4x+y\) sujeto a \(x+y\leq\)
+    máximo de \(-4x+y\) sujeto a \(x+y\leq 2\)
     
         from pulp import *
         x = LpVariable("x", 0, 3)
