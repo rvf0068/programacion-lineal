@@ -1,3 +1,8 @@
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 ## Página de programación lineal
@@ -22,3 +27,9 @@ Aprendimos a usar la biblioteca sympy.
 Maximizar $$z=x_1+x_2$$ sujeto a
 
 $$x_1\geq 0.$$
+
+Consideremos \(x^2+y^2\) y
+
+\begin{equation}
+a+b
+\end{equation}
