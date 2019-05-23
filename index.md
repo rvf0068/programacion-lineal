@@ -37,17 +37,18 @@ a+b
 \end{equation}
 
 
-1. Demuestra el siguiente problema es insoluble y explica
-   porqué.
-   \begin{equation*}
-    \begin{aligned}
-   \text{Maximizar} \quad & x_{1}+4x_{2}\\
-   \text{sujeto a} \quad &
-     \begin{aligned}
-      x_{1}+2x_{2} &\leq 5\\
-      2x_{1}+x_{2} &= 4\\
-      x_{1}-x_{2} &\geq 3\\
-       x_{1}, x_{2} & \geq 0
-     \end{aligned}
-   \end{aligned}
-   \end{equation*}
+Demuestra el siguiente problema es insoluble y explica
+porqué.
+
+\begin{equation}
+ \begin{aligned}
+\text{Maximizar} \quad & x_{1}+4x_{2}\\
+\text{sujeto a} \quad &
+  \begin{aligned}
+   x_{1}+2x_{2} &\leq 5\\
+   2x_{1}+x_{2} &= 4\\
+   x_{1}-x_{2} &\geq 3\\
+    x_{1}, x_{2} & \geq 0
+  \end{aligned}
+\end{aligned}
+\end{equation}
