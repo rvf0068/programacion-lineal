@@ -6,28 +6,27 @@ MathJax.Hub.Config({
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 
-
 # Table of Contents
 
-1.  [Teoría](#orgeec86f3)
-    1.  [Motivación](#org682b46f)
-    2.  [Ejemplos](#org4173626)
-    3.  [Convexidad](#org98fa387)
-    4.  [El método símplex](#orgefb0454)
-2.  [Herramientas computacionales](#org237195c)
-    1.  [Emacs](#orgca100d5)
-    2.  [Git](#org571bf09)
-    3.  [Python](#org1105e17)
-    4.  [LaTeX](#orga3d3282)
+1.  [Teoría](#orgbee32f8)
+    1.  [Motivación](#orge414dae)
+    2.  [Ejemplos](#org0ef5617)
+    3.  [Convexidad](#org613a5c7)
+    4.  [El método símplex](#orgf7c8185)
+2.  [Herramientas computacionales](#orgc2825a7)
+    1.  [Emacs](#org5e587f3)
+    2.  [Git](#org0136cc9)
+    3.  [Python](#orgd6b7b46)
+    4.  [LaTeX](#org3ef3781)
 
 
 
-<a id="orgeec86f3"></a>
+<a id="orgbee32f8"></a>
 
 # Teoría
 
 
-<a id="org682b46f"></a>
+<a id="orge414dae"></a>
 
 ## Motivación
 
@@ -38,7 +37,7 @@ desigualdades.
 ![img](linear-programming-example-1b.jpg)
 
 
-<a id="org4173626"></a>
+<a id="org0ef5617"></a>
 
 ## Ejemplos
 
@@ -48,25 +47,25 @@ desigualdades.
 -   El problema del flujo máximo
 
 
-<a id="org98fa387"></a>
+<a id="org613a5c7"></a>
 
 ## Convexidad
 
-Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
-[0,1]\) se tiene que \(tx+(1-t)y \in X\).
+Un conjunto \\(X\\) es **convexo** si para todos \\(x,y\in X\\) y \\(t\in
+[0,1]\\) se tiene que \\(tx+(1-t)y\in X\\).
 
 
-<a id="orgefb0454"></a>
+<a id="orgf7c8185"></a>
 
 ## El método símplex
 
 
-<a id="org237195c"></a>
+<a id="orgc2825a7"></a>
 
 # Herramientas computacionales
 
 
-<a id="orgca100d5"></a>
+<a id="org5e587f3"></a>
 
 ## Emacs
 
@@ -189,7 +188,7 @@ Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
     </table>
 
 
-<a id="org571bf09"></a>
+<a id="org0136cc9"></a>
 
 ## Git
 
@@ -198,7 +197,7 @@ Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
 2.  Github
 
 
-<a id="org1105e17"></a>
+<a id="orgd6b7b46"></a>
 
 ## Python
 
@@ -209,7 +208,7 @@ Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
         2+2
     
     También podemos usar la biblioteca pulp. Por ejemplo, encontramos el
-    máximo de \(-4x+y\) sujeto a \(x+y\leq 2\)
+    máximo de \\(-4x+y\\) sujeto a \\(x+y\leq\\)
     
         from pulp import *
         x = LpVariable("x", 0, 3)
@@ -223,7 +222,7 @@ Un conjunto \(X\) es **convexo** si para todos \(x,y\in X\) y \(t\in
 2.  Jupyter
 
 
-<a id="orga3d3282"></a>
+<a id="org3ef3781"></a>
 
 ## LaTeX
 
