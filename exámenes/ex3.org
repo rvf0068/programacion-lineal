@@ -1,0 +1,219 @@
+#+title: Tercer Examen de Programación Lineal
+#+author: Licenciatura en Matemáticas Aplicadas, UAEH
+#+date: 3 de junio de 2019
+#+language: es
+
+#+options: toc:nil ':t
+
+#+latex_header: \usepackage[margin=2.5cm]{geometry}
+#+latex_header: \usepackage[spanish,mexico]{babel}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usepackage{listings}
+
+#+latex_class_options: [twocolumn]
+
+#+latex: \thispagestyle{empty}
+
+*NOMBRE:*
+#+latex: \hrulefill
+
+#+latex: \medskip
+
+*INSTRUCCIONES:* Hay 6 preguntas en este examen, debes escoger cinco
+de ellas, marcando algún modo claro e inequívoco las preguntas
+escogidas. Recuerda explicar sin escatimar en detalles las respuestas
+a las preguntas. Tienes 1 hora y 50 minutos para resolverlo.
+
+1. Resuelve el siguiente problema:
+   \begin{equation*}
+    \begin{aligned}
+   \text{Maximizar} \quad & -x_{1}+3x_{2}\\
+   \text{sujeto a} \quad &
+     \begin{aligned}
+      -x_{1}+x_{2} &\leq 1\\
+      x_{1} &\leq 3\\
+       x_{2} & \leq 2\\
+       x_{1},x_{2} &\geq 0
+     \end{aligned}
+   \end{aligned}
+   \end{equation*}
+#+begin_src ipython :session :exports both
+from pulp import *
+x_1 = LpVariable("x_1", 0)
+x_2 = LpVariable("x_2", 0)
+prob = LpProblem("Problema 1", LpMaximize)
+prob += -x_1 + x_2 <= 1
+prob += x_1 <= 3
+prob += x_2 <= 2
+prob += -x_1+3*x_2
+status = prob.solve()
+value(x_1), value(x_2),value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (1.0, 2.0, 5.0, 'Optimal')
+
+
+1. Resuelve el siguiente problema:
+   \begin{equation*}
+    \begin{aligned}
+   \text{Maximizar} \quad & x_{1}+2x_{2}\\
+   \text{sujeto a} \quad &
+     \begin{aligned}
+      x_{1}+3x_{2}+x_{3} &= 4\\
+      2x_{2}+x_{3} &= 2\\
+       x_{1},x_{2},x_{3} &\geq 0
+     \end{aligned}
+   \end{aligned}
+   \end{equation*}
+
+#+begin_src ipython :session :exports both
+from pulp import *
+x_1 = LpVariable("x_1", 0)
+x_2 = LpVariable("x_2", 0)
+x_3 = LpVariable("x_3", 0)
+prob = LpProblem("Problema 2", LpMaximize)
+prob += x_1 + 3*x_2 + x_3 == 4
+prob += 2*x_2 + x_3 == 2
+prob += x_1+2*x_2
+status = prob.solve()
+value(x_1), value(x_2), value(x_3), value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (1.0, 1.0, 0.0, 3.0, 'Optimal')
+
+3. Un gerente está planeando cómo distribuir la producción de tres
+   productos entre dos máquinas. Para ser manufacturado cada producto
+   requiere cierto tiempo (en horas) en cada una de las máquinas.
+
+   El tiempo requerido está resumido en la siguiente tabla:
+
+   |------------------+---+---|
+   | Producto/Máquina | 1 | 2 |
+   |------------------+---+---|
+   | A                | 1 | 1 |
+   | B                | 2 | 1 |
+   | C                | 2 | 2 |
+   |------------------+---+---|
+
+   La máquina 1 está disponible 40 horas a la semana y la 2 está
+   disponible 34 horas a la semana.
+
+   Si la utilidad obtenida al vender los productos A, B y C es de 2, 3
+   y 4 pesos por unidad, respectivamente, ¿cuál debe ser la producción
+   semanal que maximiza la utilidad? ¿Cuál es la utilidad máxima?
+
+#+begin_src ipython :session :exports both
+from pulp import *
+x_1 = LpVariable("x_1", 0)
+x_2 = LpVariable("x_2", 0)
+x_3 = LpVariable("x_3", 0)
+prob = LpProblem("Problema 3", LpMaximize)
+prob +=   x_1 + 2*x_2 + 2*x_3 <= 40
+prob +=   x_1 +   x_2 +   x_3 <= 34
+prob += 2*x_1 + 3*x_2 + 4*x_3
+status = prob.solve()
+value(x_1), value(x_2), value(x_3), value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (28.0, 0.0, 6.0, 80.0, 'Optimal')
+
+4. Una compañía mueblera fabrica tres tipos de libreros: el
+   "intelectual", el "juvenil" y el "ejecutivo". Cada librero es
+   elaborado utilizando tres tipos de madera: roble, pino y caoba. El
+   librero tipo "intelectual" requiere 2 unidades cuadradas de hoja de
+   roble, 6 de pino y 4 de caoba. El librero tipo "juvenil" requiere
+   respectivamente 1, 4 y 3 unidades cuadradas de hoja de roble, pino
+   y caoba. Y el librero tipo "ejecutivo" requiere respectivamente 2,
+   2 y 8 unidades cuadradas de hoja de pino, roble y caoba.
+
+   La ganancia por librero vendido de los tipos "intelectual",
+   "juvenil" y "ejecutivo" es respectivamente de $20, $5 y $30. Si la
+   compañía dispone en sus bodegas de 100 unidades cuadradas de hoja
+   de roble, 600 unidades de pino y 320 unidades de caoba, ¿cuántos
+   libreros de cada tipo se deberán fabricar para maximizar la
+   ganancia? ¿Cuál es la ganancia máxima?
+
+#+begin_src ipython :session :exports both
+from pulp import *
+x_1 = LpVariable("x_1", 0)
+x_2 = LpVariable("x_2", 0)
+x_3 = LpVariable("x_3", 0)
+prob = LpProblem("Problema 4", LpMaximize)
+prob += 2*x_1 +   x_2 + 2*x_3 <= 100
+prob += 6*x_1 + 4*x_2 + 2*x_3 <= 600
+prob += 4*x_1 + 3*x_2 + 8*x_3 <= 320
+prob += 20*x_1 + 5*x_2 + 30*x_3
+status = prob.solve()
+value(x_1), value(x_2), value(x_3), value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (20.0, 0.0, 30.0, 1300.0, 'Optimal')
+
+5. Plantea la siguiente situación como un problema de programación
+   lineal. NO es necesario resolverlo.
+
+   Una mujer quiere elaborar un programa semanal de ejercicios, el
+   cual incluirá trote, ciclismo y natación. A fin de variar el
+   ejercicio, ella planea dedicar al ciclismo por lo menos el mismo
+   tiempo que le dedicará al trote y la natación combinados. Además
+   quiere nadar al menos dos horas por semana. Si en el trote consume
+   600 calorías por hora, en el ciclismo 300 calorías por hora y en la
+   natación 300 calorías por hora, ¿cuántas horas deberá dedicar a
+   cada tipo de ejercicio, si quiere quemar en total al menos 3000
+   calorías semanales en el menor tiempo posible? 
+
+#+begin_src ipython :session :exports both
+from pulp import *
+x_1 = LpVariable("x_1", 0)
+x_2 = LpVariable("x_2", 0)
+x_3 = LpVariable("x_3", 0)
+prob = LpProblem("Problema 5", LpMinimize)
+prob +=   x_1 -   x_2 +   x_3 <= 0
+prob +=                   x_3 >= 2
+prob += 600*x_1 + 300*x_2 + 300*x_3 >= 3000
+prob += x_1 + x_2 + x_3
+status = prob.solve()
+value(x_1), value(x_2), value(x_3), value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (2.0, 4.0, 2.0, 8.0, 'Optimal')
+
+6. Demuestra que el siguiente problema es insoluble y explica
+   porqué. Plantea el problema dual y muestra que también es
+   insoluble. 
+   \begin{equation*}
+    \begin{aligned}
+   \text{Maximizar} \quad & 2x_{1}-x_{2}\\
+   \text{sujeto a} \quad &
+     \begin{aligned}
+            x_{1}-x_{2} &\leq 1\\
+      -x_{1}+x_{2}&\leq -2\\
+       x_{1},x_{2} &\geq 0\\
+     \end{aligned}
+   \end{aligned}
+   \end{equation*}
+
+#+begin_src ipython :session :exports both
+from pulp import *
+x_1 = LpVariable("x_1", 0)
+x_2 = LpVariable("x_2", 0)
+prob = LpProblem("Problema 6", LpMaximize)
+prob += x_1 - x_2 <= 1
+prob += -x_1+x_2 <= -2
+prob += 2*x_1-x_2
+status = prob.solve()
+value(x_1), value(x_2),value(prob.objective), LpStatus[prob.status]
+#+end_src
+
+#+RESULTS:
+: : (2.0, 0.0, 4.0, 'Infeasible')
+
+
+# Local Variables:
+# org-confirm-babel-evaluate: nil
+# End:
